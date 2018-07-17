@@ -1,0 +1,28 @@
+version: '3'
+services:
+  node:
+    build: .
+    container_name: node-app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    networks:
+      - node-net
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - node-net
+  redis:
+    image: redis:alpine
+    container_name: redis
+    networks:
+     - node-net
+networks:
+  node-net:
+    driver: "bridge"
